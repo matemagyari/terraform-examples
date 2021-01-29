@@ -4,19 +4,55 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 terraform {
-  # This module is now only being tested with Terraform 0.13.x. However, to make upgrading easier, we are setting
-  # 0.12.26 as the minimum version, as that version added support for required_providers with source URLs, making it
-  # forwards compatible with 0.13.x code.
   required_version = ">= 0.12.26"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 2.60.0"
+    }
+  }
 }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# DEPLOY AN EC2 INSTANCE RUNNING UBUNTU
-# See test/terraform_aws_example_test.go for how to write automated tests for this code.
-# ---------------------------------------------------------------------------------------------------------------------
+// a provider is responsible for creating and managing resources.
+provider "aws" {
+  access_key                  = "mock_access_key"
+  secret_key                  = "mock_secret_key"
+  region                      = "us-east-1"
+  s3_force_path_style         = true
+  skip_credentials_validation = true
+  skip_metadata_api_check     = true
+  skip_requesting_account_id  = true
 
+  endpoints {
+    apigateway     = "http://localhost:4566"
+    cloudformation = "http://localhost:4566"
+    cloudwatch     = "http://localhost:4566"
+    dynamodb       = "http://localhost:4566"
+    es             = "http://localhost:4566"
+    firehose       = "http://localhost:4566"
+    iam            = "http://localhost:4566"
+    kinesis        = "http://localhost:4566"
+    lambda         = "http://localhost:4566"
+    route53        = "http://localhost:4566"
+    redshift       = "http://localhost:4566"
+    s3             = "http://localhost:4566"
+    secretsmanager = "http://localhost:4566"
+    ses            = "http://localhost:4566"
+    sns            = "http://localhost:4566"
+    sqs            = "http://localhost:4566"
+    ssm            = "http://localhost:4566"
+    stepfunctions  = "http://localhost:4566"
+    sts            = "http://localhost:4566"
+    ec2            = "http://localhost:4566"
+  }
+}
+
+// The resource block defines a piece of infrastructure
+// aws_instance: resource type
+// example: resource name
 resource "aws_instance" "example" {
-  ami           = data.aws_ami.ubuntu.id
+  ami           = "ami-0d57c0143330e1fa7"
   instance_type = "t2.micro"
 
   tags = {
@@ -28,28 +64,28 @@ resource "aws_instance" "example" {
 # LOOK UP THE LATEST UBUNTU AMI
 # ---------------------------------------------------------------------------------------------------------------------
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
-  owners      = ["099720109477"] # Canonical
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
-
-  filter {
-    name   = "image-type"
-    values = ["machine"]
-  }
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
-  }
-}
+//data "aws_ami" "ubuntu" {
+//  most_recent = true
+//  owners      = ["099720109477"] # Canonical
+//
+//  filter {
+//    name   = "virtualization-type"
+//    values = ["hvm"]
+//  }
+//
+//  filter {
+//    name   = "architecture"
+//    values = ["x86_64"]
+//  }
+//
+//  filter {
+//    name   = "image-type"
+//    values = ["machine"]
+//  }
+//
+//  filter {
+//    name   = "name"
+//    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+//  }
+//}
 
