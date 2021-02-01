@@ -21,3 +21,12 @@ resource "docker_container" "nginx" {
     external = 8000
   }
 }
+
+// Nginx won't be up when it's called
+//data "http" "nginx_http_result" {
+//  url = "http://localhost:8000"
+//}
+
+//output "nginx_http_result" {
+//  value = data.http.nginx_http_result.body
+//}
