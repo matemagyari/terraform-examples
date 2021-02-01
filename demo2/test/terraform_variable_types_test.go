@@ -150,7 +150,7 @@ func TestTerraformFormatNestedListMap(t *testing.T) {
 }
 
 func GetTerraformOptionsForFormatTests(t *testing.T) *terraform.Options {
-	exampleFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/terraform-basic-example")
+	exampleFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/terraform_variable_types")
 
 	// Set up terratest to retry on known failures
 	maxTerraformRetries := 3

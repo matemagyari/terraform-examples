@@ -3,28 +3,33 @@
 # Define these secrets as environment variables
 # ---------------------------------------------------------------------------------------------------------------------
 
+# AWS_ACCESS_KEY_ID
+# AWS_SECRET_ACCESS_KEY
+
 # ---------------------------------------------------------------------------------------------------------------------
 # REQUIRED PARAMETERS
 # You must provide a value for each of these parameters.
 # ---------------------------------------------------------------------------------------------------------------------
-
-variable "first_name" {
-  description = "First name"
-  type        = string
-}
-
-variable "last_name" {
-  description = "Last name"
-  type        = string
-}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # OPTIONAL PARAMETERS
 # These parameters have reasonable defaults.
 # ---------------------------------------------------------------------------------------------------------------------
 
-variable "template_file_path" {
-  description = "Template file path"
+variable "example" {
+  description = "Example variable"
   type        = string
-  default     = "hello_template.tpl"
+  default     = "example"
+}
+
+variable "example2" {
+  description = "Example variable 2"
+  type        = string
+  default     = ""
+}
+
+variable "example_any" {
+  description = "An example variable that is can be anything"
+  type        = any
+  default     = null
 }

@@ -18,7 +18,7 @@ terraform {
 provider "aws" {
   access_key                  = "mock_access_key"
   secret_key                  = "mock_secret_key"
-  region                      = "us-west-2"
+  region                      = var.region
   s3_force_path_style         = true
   skip_credentials_validation = true
   skip_metadata_api_check     = true
@@ -54,8 +54,38 @@ provider "aws" {
 resource "aws_instance" "example" {
   ami           = "ami-0d57c0143330e1fa7"
   instance_type = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.web-sg.id]
 
   tags = {
     Name = var.instance_name
   }
+}
+
+resource "aws_eip" "ip" {
+  vpc      = true
+  instance = aws_instance.example.id
+}
+
+resource "aws_security_group" "web-sg" {
+  name = "web-sg"
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "2.66.0"
+
+  cidr = var.vpc_cidr_block
 }
