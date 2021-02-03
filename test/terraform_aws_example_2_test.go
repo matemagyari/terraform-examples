@@ -10,7 +10,6 @@ import (
 )
 
 
-// An example of how to test the Terraform module in examples/terraform-aws-example using Terratest.
 func TestTerraformAwsExample2(t *testing.T) {
 	t.Parallel()
 

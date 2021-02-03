@@ -5,4 +5,5 @@ Demonstrates basic Terraform features.
 - input variables
 - output variables
 - local variables
-- files
+- variable files
+- files (using the "local" provider)
